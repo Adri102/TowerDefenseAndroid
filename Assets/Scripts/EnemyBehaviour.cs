@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour {
 
+    public PlayerBehaviour player;
+    public EnemySpawnBehaviour spawn;
+
     public GameObject enemy;
     public GameObject[] points;
 
@@ -22,6 +25,7 @@ public class EnemyBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         endPoint = points.Length;
         currentPoint = 0;
         distance = Vector2.Distance(enemy.transform.position, points[currentPoint].transform.position);
@@ -33,27 +37,30 @@ public class EnemyBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        currentTime = Time.time - lastTime;
-        enemy.transform.position = Vector2.Lerp(enemy.transform.position, points[currentPoint].transform.position, currentTime/travelTime);
-        currentDistance = Vector2.Distance(enemy.transform.position, points[currentPoint].transform.position);
-
-        if((currentDistance < 0.1f))
+        if(!spawn.gameOver)
         {
-            if(currentPoint < points.Length - 1)
-            {
-                Debug.Log("point");
-                currentPoint++;
-                lastTime = Time.time;
-                RotateDirection();
-                distance = Vector3.Distance(enemy.transform.position, points[currentPoint].transform.position);
-            }
-            else
-            {
-                Destroy(enemy);
-            }
+            currentTime = Time.time - lastTime;
+            enemy.transform.position = Vector2.Lerp(enemy.transform.position, points[currentPoint].transform.position, currentTime / travelTime);
+            currentDistance = Vector2.Distance(enemy.transform.position, points[currentPoint].transform.position);
 
+            if((currentDistance < 0.1f))
+            {
+                if(currentPoint < points.Length - 1)
+                {
+                    Debug.Log("point");
+                    currentPoint++;
+                    lastTime = Time.time;
+                    RotateDirection();
+                    distance = Vector3.Distance(enemy.transform.position, points[currentPoint].transform.position);
+                }
+                else
+                {
+                    player.lives -= 1;
+                    Destroy(enemy);
+                }
+
+            }
         }
-
 	}
 
     //

@@ -20,26 +20,38 @@ public class EnemySpawnBehaviour : MonoBehaviour {
 
     public GameObject enemy;
     public GameObject[] points;
+    public GameObject gameOverScreen;
 
     public bool gameOver;
 
     public Text waveText;
     public int currentWave;
+    public PlayerBehaviour player;
 
     // Use this for initialization
     void Start ()
     {
         enemy.GetComponent<EnemyBehaviour>().points = points;
+        enemy.GetComponent<EnemyBehaviour>().spawn = this;
         waveText.text = 0 + "/" + waves.Length;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) currentWave = 0;
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            player.lives = player.maxLives;
+            gameOver = false;
+            currentWave = 0;
+        }
+
+        if(player.lives <= 0) gameOver = true;
 
         if(!gameOver)
         {
+            if(gameOverScreen.activeSelf == true) gameOverScreen.SetActive(false);
+
             if(currentWave < waves.Length && currentWave != -1)
             {
                 waitWavesCounter += Time.deltaTime;
@@ -61,5 +73,6 @@ public class EnemySpawnBehaviour : MonoBehaviour {
 
             waveText.text = (currentWave + 1) + "/" + waves.Length;
         }
+        else gameOverScreen.SetActive(true);
     }
 }
