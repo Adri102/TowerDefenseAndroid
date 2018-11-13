@@ -28,7 +28,6 @@ public class EnemySpawnBehaviour : MonoBehaviour {
     public int currentWave;
     public PlayerBehaviour player;
 
-    // Use this for initialization
     void Start ()
     {
         enemy.GetComponent<EnemyBehaviour>().points = points;
@@ -36,7 +35,6 @@ public class EnemySpawnBehaviour : MonoBehaviour {
         waveText.text = 0 + "/" + waves.Length;
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         if(Input.GetKeyDown(KeyCode.Space))

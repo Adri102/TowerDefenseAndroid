@@ -21,8 +21,8 @@ public class EnemyBehaviour : MonoBehaviour {
     public float travelTime;
     public float lastTime;
     public float currentTime;
+    public float health;
 
-    // Use this for initialization
     void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
@@ -33,8 +33,7 @@ public class EnemyBehaviour : MonoBehaviour {
         lastTime = Time.time;
         RotateDirection();
     }
-	
-	// Update is called once per frame
+
 	void Update ()
     {
         if(!spawn.gameOver)
@@ -63,7 +62,6 @@ public class EnemyBehaviour : MonoBehaviour {
         }
 	}
 
-    //
     private void RotateDirection()
     {
         // Double check, was giving erros dunno why
@@ -79,5 +77,24 @@ public class EnemyBehaviour : MonoBehaviour {
             enemy.transform.rotation = Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg);
         }
 
+    }
+
+    public float DistanceToExit()
+    {
+        float distance = 0;
+        distance += Vector2.Distance(gameObject.transform.position, points[currentPoint + 1].transform.position);
+        for(int i = currentPoint + 1; i < points.Length - 1; i++)
+        {
+            Vector3 startPosition = points[i].transform.position;
+            Vector3 endPosition = points[i + 1].transform.position;
+            distance += Vector2.Distance(startPosition, endPosition);
+        }
+        return distance;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0) Destroy(enemy);
     }
 }
