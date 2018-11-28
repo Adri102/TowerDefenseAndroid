@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1971432733389424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4562915483043182}
@@ -136,7 +136,7 @@ MonoBehaviour:
   travelTime: 0
   lastTime: 0
   currentTime: 0
-  health: 5
+  health: 900
 --- !u!212 &212704282465252818
 SpriteRenderer:
   m_ObjectHideFlags: 1
