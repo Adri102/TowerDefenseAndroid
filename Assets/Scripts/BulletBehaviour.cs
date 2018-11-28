@@ -8,38 +8,45 @@ public class BulletBehaviour : MonoBehaviour {
     public float damage;
     public GameObject target;
     public EnemyBehaviour enemy;
-    public Vector3 startPosition;
-    public Vector3 targetPosition;
 
     private float distance;
-    private float startTime;
 
-    // private GameManagerBehavior gameManager;
+    private float despawnCounter;
+    
 
     void Start ()
     {
-        startTime = Time.time;
-        distance = Vector2.Distance(startPosition, targetPosition);
         enemy = target.gameObject.GetComponent<EnemyBehaviour>();
-        //GameObject gm = GameObject.Find("GameManager");
-        // gameManager = gm.GetComponent<GameManagerBehavior>();
+        despawnCounter = 0;
     }
 
     void Update ()
     {
-        // 1 
-        float timeInterval = Time.time - startTime;
-        gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
-
-        // 2 
-        if(gameObject.transform.position.Equals(targetPosition))
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        if(target == null) despawnCounter += Time.deltaTime;
+        else
         {
-            if(target != null)
+            // 1 
+            gameObject.transform.LookAt(target.transform);
+            gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            // 2 
+            /*if(gameObject.transform.position == targetPosition)
             {
-                enemy.TakeDamage(damage);
-            }
-            Destroy(gameObject);
+                if(target != null)
+                {
+                    enemy.TakeDamage(damage);
+                }
+                Destroy(gameObject);
+            }*/
         }
 
+        if(despawnCounter > 0.1) Destroy(gameObject);
+    }
+
+    public void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 }

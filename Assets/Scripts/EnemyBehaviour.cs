@@ -31,25 +31,26 @@ public class EnemyBehaviour : MonoBehaviour {
         distance = Vector2.Distance(enemy.transform.position, points[currentPoint].transform.position);
         travelTime = distance / speed;
         lastTime = Time.time;
-        RotateDirection();
+        RotateDirectionNew();
     }
 
 	void Update ()
     {
         if(!spawn.gameOver)
         {
+            //enemy.transform.localRotation = Quaternion.Euler(0, 0, 0);
             currentTime = Time.time - lastTime;
-            enemy.transform.position = Vector2.Lerp(enemy.transform.position, points[currentPoint].transform.position, currentTime / travelTime);
+            gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            //enemy.transform.position = Vector2.Lerp(enemy.transform.position, points[currentPoint].transform.position, currentTime / travelTime);
             currentDistance = Vector2.Distance(enemy.transform.position, points[currentPoint].transform.position);
 
             if((currentDistance < 0.1f))
             {
                 if(currentPoint < points.Length - 1)
                 {
-                    Debug.Log("point");
                     currentPoint++;
                     lastTime = Time.time;
-                    RotateDirection();
+                    RotateDirectionNew();
                     distance = Vector3.Distance(enemy.transform.position, points[currentPoint].transform.position);
                 }
                 else
@@ -79,6 +80,12 @@ public class EnemyBehaviour : MonoBehaviour {
 
     }
 
+    private void RotateDirectionNew()
+    {
+        gameObject.transform.LookAt(points[currentPoint].transform);
+
+    }
+
     public float DistanceToExit()
     {
         float distance = 0;
@@ -96,5 +103,15 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         health -= damage;
         if (health <= 0) Destroy(enemy);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Bullet")
+        {
+            TakeDamage(other.GetComponent<BulletBehaviour>().damage);
+            other.GetComponent<BulletBehaviour>().DestroyBullet();
+
+        }
     }
 }

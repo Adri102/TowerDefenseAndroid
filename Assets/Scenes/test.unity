@@ -356,6 +356,7 @@ MonoBehaviour:
   enemiesInRange: []
   bullet: {fileID: 1817200571035390, guid: 347d5cd5c96b68f4b8fea001004042db, type: 2}
   target: {fileID: 0}
+  fireRate: 0.5
 --- !u!58 &333729100
 CircleCollider2D:
   m_ObjectHideFlags: 0

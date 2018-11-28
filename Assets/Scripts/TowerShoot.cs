@@ -11,19 +11,28 @@ public class TowerShoot : MonoBehaviour {
 
     private float distanceTarget = 100;
 
+    public float fireRate;
+
+    private float fireRateCounter;
+    
+
 
     void Start ()
     {
         enemiesInRange = new List<GameObject>();
-        bullet.gameObject.GetComponent<BulletBehaviour>().startPosition = gameObject.transform.position;
+        fireRateCounter = 0;
     }
 
 
     void Update ()
     {
+        fireRateCounter += Time.deltaTime;
+
         // Checks there is an enemy in range
-		if (enemiesInRange.Count >= 1)
+        if (enemiesInRange.Count >= 1)
         {
+            CheckEnemiesInRange();
+
             // Checks the enemy closer to exit the map and targets it
             for(int i = 0; i < enemiesInRange.Count; i++)
             {
@@ -32,13 +41,20 @@ public class TowerShoot : MonoBehaviour {
                     distanceTarget = enemiesInRange[i].gameObject.GetComponent<EnemyBehaviour>().DistanceToExit();
                     target = enemiesInRange[i];
                     bullet.gameObject.GetComponent<BulletBehaviour>().target = target;
-                    bullet.gameObject.GetComponent<BulletBehaviour>().targetPosition = target.transform.position;
                 }
             }
 
-            GameObject newBullet = Instantiate(bullet, this.transform);
+            if (fireRateCounter >= fireRate && target != null)
+            {
+                GameObject newBullet = Instantiate(bullet);
+                newBullet.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+                distanceTarget = 100;
+                fireRateCounter = 0;
+            }
+
         }
-	}
+
+    }
 
     void OnEnemyDestroy(GameObject enemy)
     {
@@ -50,8 +66,6 @@ public class TowerShoot : MonoBehaviour {
         if(other.gameObject.tag =="Enemy")
         {
             enemiesInRange.Add(other.gameObject);
-            // EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
-            //del.enemyDelegate += OnEnemyDestroy;
         }
     }
 
@@ -60,8 +74,14 @@ public class TowerShoot : MonoBehaviour {
         if(other.gameObject.tag.Equals("Enemy"))
         {
             enemiesInRange.Remove(other.gameObject);
-            // EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
-            //del.enemyDelegate -= OnEnemyDestroy;
+        }
+    }
+
+    public void CheckEnemiesInRange()
+    {
+        for(int i = 0; i < enemiesInRange.Count; i++)
+        {
+            if(enemiesInRange[i] == null) enemiesInRange.Remove(enemiesInRange[i]);
         }
     }
 
