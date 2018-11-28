@@ -40,7 +40,8 @@ public class EnemyBehaviour : MonoBehaviour {
         {
             //enemy.transform.localRotation = Quaternion.Euler(0, 0, 0);
             currentTime = Time.time - lastTime;
-            gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            //gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            gameObject.transform.position = Vector2.MoveTowards(transform.position, points[currentPoint].transform.position, Time.deltaTime * speed);
             //enemy.transform.position = Vector2.Lerp(enemy.transform.position, points[currentPoint].transform.position, currentTime / travelTime);
             currentDistance = Vector2.Distance(enemy.transform.position, points[currentPoint].transform.position);
 
@@ -82,8 +83,8 @@ public class EnemyBehaviour : MonoBehaviour {
 
     private void RotateDirectionNew()
     {
-        gameObject.transform.LookAt(points[currentPoint].transform);
-
+        //gameObject.transform.LookAt(points[currentPoint].transform);
+        transform.right = points[currentPoint].transform.position - transform.position;
     }
 
     public float DistanceToExit()
