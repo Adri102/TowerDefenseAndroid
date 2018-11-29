@@ -39,9 +39,7 @@ public class EnemySpawnBehaviour : MonoBehaviour {
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            player.lives = player.maxLives;
-            gameOver = false;
-            currentWave = 0;
+            StartWave();
         }
 
         if(player.lives <= 0) gameOver = true;
@@ -72,5 +70,12 @@ public class EnemySpawnBehaviour : MonoBehaviour {
             waveText.text = (currentWave + 1) + "/" + waves.Length;
         }
         else gameOverScreen.SetActive(true);
+    }
+
+    public void StartWave()
+    {
+        player.lives = player.maxLives;
+        gameOver = false;
+        currentWave = 0;
     }
 }
