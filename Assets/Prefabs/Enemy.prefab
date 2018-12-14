@@ -136,7 +136,7 @@ MonoBehaviour:
   travelTime: 0
   lastTime: 0
   currentTime: 0
-  health: 900
+  health: 5
 --- !u!212 &212704282465252818
 SpriteRenderer:
   m_ObjectHideFlags: 1
