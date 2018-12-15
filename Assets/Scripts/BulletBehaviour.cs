@@ -28,7 +28,7 @@ public class BulletBehaviour : MonoBehaviour {
         {
             // 1 
             //gameObject.transform.LookAt(target.transform);
-            transform.right = target.transform.position - transform.position;
+            transform.up = target.transform.position - transform.position;
             //gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
             gameObject.transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Time.deltaTime * speed);
 
