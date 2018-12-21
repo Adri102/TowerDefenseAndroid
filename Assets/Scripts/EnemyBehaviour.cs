@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBehaviour : MonoBehaviour {
 
@@ -21,10 +22,15 @@ public class EnemyBehaviour : MonoBehaviour {
     public float travelTime;
     public float lastTime;
     public float currentTime;
-    public float health;
+    public float startHealth;
+    private float health;
+
+    public Image healthBar;
+    public GameObject sprite;
 
     void Start ()
     {
+        health = startHealth;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         endPoint = points.Length;
         currentPoint = 0;
@@ -84,7 +90,7 @@ public class EnemyBehaviour : MonoBehaviour {
     private void RotateDirectionNew()
     {
         //gameObject.transform.LookAt(points[currentPoint].transform);
-        transform.right = points[currentPoint].transform.position - transform.position;
+        sprite.transform.right = points[currentPoint].transform.position - transform.position;
     }
 
     public float DistanceToExit()
@@ -103,6 +109,7 @@ public class EnemyBehaviour : MonoBehaviour {
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBar.fillAmount = health / startHealth;
         if (health <= 0) Destroy(enemy);
     }
 
