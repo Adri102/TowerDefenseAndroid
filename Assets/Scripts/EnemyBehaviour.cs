@@ -117,9 +117,12 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         if(other.gameObject.tag == "Bullet")
         {
-            TakeDamage(other.GetComponent<BulletBehaviour>().damage);
+            //TakeDamage(other.GetComponent<BulletBehaviour>().damage);
             other.GetComponent<BulletBehaviour>().DestroyBullet();
-
+        }
+        if (other.gameObject.tag == "Aoe")
+        {
+            TakeDamage(other.GetComponent<AoeBehaviour>().damage);
         }
     }
 }

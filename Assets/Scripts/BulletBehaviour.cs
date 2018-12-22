@@ -6,6 +6,7 @@ public class BulletBehaviour : MonoBehaviour {
 
     public float speed;
     public float damage;
+    public GameObject aoe;
     public GameObject target;
     public EnemyBehaviour enemy;
 
@@ -49,6 +50,8 @@ public class BulletBehaviour : MonoBehaviour {
 
     public void DestroyBullet()
     {
+        GameObject newAoe = Instantiate(aoe);
+        newAoe.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
         Destroy(gameObject);
     }
 }
