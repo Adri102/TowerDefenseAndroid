@@ -10,23 +10,23 @@ public class LaserTower : MonoBehaviour
 
     private float distanceTarget = 100;
 
-    //public float fireRate;
+    public float fireRate;
     //public float damage;
 
-    //private float fireRateCounter;
+    private float fireRateCounter;
     
     void Start()
     {
         enemiesInRange = new List<GameObject>();
-        //fireRateCounter = 0;
+        fireRateCounter = 0;
     }
     
     void Update()
     {
-        //fireRateCounter += Time.deltaTime;
+        fireRateCounter += Time.deltaTime;
 
         // Checks there is an enemy in range
-        if (enemiesInRange.Count >= 1 /*&& (fireRateCounter >= fireRate)*/)
+        if (enemiesInRange.Count >= 1 && (fireRateCounter >= fireRate))
         {
             CheckEnemiesInRange();
             // Checks the enemy closer to exit the map and targets it
@@ -36,13 +36,19 @@ public class LaserTower : MonoBehaviour
                 {
                     distanceTarget = enemiesInRange[i].gameObject.GetComponent<EnemyBehaviour>().DistanceToExit();
                     target = enemiesInRange[i];
-                    GameObject newLaser = Instantiate(laser);
-                    newLaser.GetComponent<LaserBehaviour>().target = target;
-                    newLaser.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+                    //GameObject newLaser = Instantiate(laser);
+                    //newLaser.GetComponent<LaserBehaviour>().target = target;
+                    //newLaser.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
                     distanceTarget = 100;
-                    //fireRateCounter = 0;
-                    //Debug.Log("Kinetic shoot");
                 }
+            }
+
+            if(fireRateCounter >= fireRate && target != null)
+            {
+                GameObject newLaser = Instantiate(laser);
+                newLaser.GetComponent<LaserBehaviour>().target = target;
+                newLaser.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+                fireRateCounter = 0;
             }
         }
         else target = null;

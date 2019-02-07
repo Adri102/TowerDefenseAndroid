@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212259104942889570}
   - component: {fileID: 61345255495405076}
   - component: {fileID: 114296148605317708}
+  - component: {fileID: 50050077668109566}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Laser
@@ -42,6 +43,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50050077668109566
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1265172070121872}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!61 &61345255495405076
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -51,7 +72,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.5, y: 0}
@@ -73,7 +94,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1265172070121872}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 057afe11251453a46be76e04c8592497, type: 3}
   m_Name: 
@@ -81,8 +102,11 @@ MonoBehaviour:
   damageRate: 0
   damageRateCounter: 0
   damage: 2
+  speed: 10
   target: {fileID: 0}
   enemy: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
+  body: {fileID: 50050077668109566}
 --- !u!212 &212259104942889570
 SpriteRenderer:
   m_ObjectHideFlags: 1
