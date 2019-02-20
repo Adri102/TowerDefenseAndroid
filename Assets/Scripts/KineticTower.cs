@@ -34,7 +34,7 @@ public class KineticTower : MonoBehaviour
         {
             CheckEnemiesInRange();
 
-            // Checks the enemy closer to exit the map and targets it
+            // Checks the enemy closer to exit the map and damages it
             for(int i = 0; i < enemiesInRange.Count; i++)
             {
                 if(enemiesInRange[i].gameObject.GetComponent<EnemyBehaviour>().DistanceToExit() < distanceTarget)
@@ -44,7 +44,7 @@ public class KineticTower : MonoBehaviour
                     enemiesInRange[i].gameObject.GetComponent<EnemyBehaviour>().TakeDamage(damage);
                     distanceTarget = 100;
                     fireRateCounter = 0;
-                    Debug.Log("Kinetic shoot");
+                    //Debug.Log("Kinetic shoot");
                 }
             }
         }

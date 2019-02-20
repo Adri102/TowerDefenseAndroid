@@ -237,7 +237,7 @@ MonoBehaviour:
   travelTime: 0
   lastTime: 0
   currentTime: 0
-  startHealth: 5
+  startHealth: 50
   healthBar: {fileID: 114934584346739058}
   sprite: {fileID: 1209185364907848}
 --- !u!114 &114781841101579564

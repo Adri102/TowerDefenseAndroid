@@ -37,7 +37,7 @@ public class EnemyBehaviour : MonoBehaviour {
         distance = Vector2.Distance(enemy.transform.position, points[currentPoint].transform.position);
         travelTime = distance / speed;
         lastTime = Time.time;
-        RotateDirectionNew();
+        RotateDirection();
     }
 
 	void Update ()
@@ -57,7 +57,7 @@ public class EnemyBehaviour : MonoBehaviour {
                 {
                     currentPoint++;
                     lastTime = Time.time;
-                    RotateDirectionNew();
+                    RotateDirection();
                     distance = Vector3.Distance(enemy.transform.position, points[currentPoint].transform.position);
                 }
                 else
@@ -72,24 +72,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     private void RotateDirection()
     {
-        // Double check, was giving erros dunno why
-        if(currentPoint < points.Length - 1)
-        {
-            // Difference between point and enemy
-            Vector3 diff = (points[currentPoint].transform.position - enemy.transform.position);
-
-            // ATan2 Returns the angle in radians whose Tan is y/x, ignoring negatives numbers or /0 errors
-            float angle = Mathf.Atan2(diff.y, diff.x);
-
-            // Set rotation. 
-            enemy.transform.rotation = Quaternion.Euler(0f, 0f, angle * Mathf.Rad2Deg);
-        }
-
-    }
-
-    private void RotateDirectionNew()
-    {
-        //gameObject.transform.LookAt(points[currentPoint].transform);
+        // Rotates into the next point
         sprite.transform.right = points[currentPoint].transform.position - transform.position;
     }
 
@@ -117,12 +100,17 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         if(other.gameObject.tag == "Bullet")
         {
-            //TakeDamage(other.GetComponent<BulletBehaviour>().damage);
+            // Destroys the missile and creates an Aoe
             other.GetComponent<BulletBehaviour>().DestroyBullet();
         }
         if (other.gameObject.tag == "Aoe")
         {
             TakeDamage(other.GetComponent<AoeBehaviour>().damage);
+        }
+
+        if (other.gameObject.tag == "Laser")
+        {
+            TakeDamage(other.GetComponent<LaserBehaviour>().damage);
         }
     }
 }

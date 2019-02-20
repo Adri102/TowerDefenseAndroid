@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LaserBehaviour : MonoBehaviour
 {
-    public float damageRate;
-    public float damageRateCounter;
+    //public float damageRate;
+    //public float damageRateCounter;
     public float damage;
     public float speed;
     public GameObject target;
@@ -19,33 +19,23 @@ public class LaserBehaviour : MonoBehaviour
     void Start ()
     {
         enemy = target.gameObject.GetComponent<EnemyBehaviour>();
-        damageRate = 1f;
-        damageRateCounter = 0;
+        //damageRate = 1f;
+        //damageRateCounter = 0;
         despawnCounter = 0;
+        // Gets the direction the target is facing and applies a force to move forward
         transform.right = target.transform.position - transform.position;
         direction = target.transform.position;
-        body.AddRelativeForce(new Vector2(speed, speed), ForceMode2D.Impulse);
+        body.AddRelativeForce(transform.right * speed, ForceMode2D.Impulse);
     }
 
     void Update ()
     {
-
-        if(target == null) despawnCounter += Time.deltaTime;
-        else
-        {
-            //transform.right = direction - transform.position;
-
-            //transform.Translate(transform.forward * speed * Time.deltaTime);
-
-            //transform.position = Vector2.MoveTowards(transform.position, direction, Time.deltaTime * speed);
-
-            //body.AddRelativeForce(new Vector2(speed, speed), ForceMode2D.Force);
-        }
-
+        // Despawn Logic, movement made with the rigidbody
         despawnCounter += Time.deltaTime;
         if (despawnCounter > 3) Destroy(gameObject);
     }
 
+    // Never used, created just in case
     public void DestroyLaser()
     {
         Destroy(gameObject);

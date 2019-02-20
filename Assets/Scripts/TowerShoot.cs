@@ -44,6 +44,7 @@ public class TowerShoot : MonoBehaviour {
                 }
             }
 
+            // Fires a missile
             if (fireRateCounter >= fireRate && target != null)
             {
                 GameObject newBullet = Instantiate(bullet);
@@ -54,11 +55,6 @@ public class TowerShoot : MonoBehaviour {
 
         }
 
-    }
-
-    void OnEnemyDestroy(GameObject enemy)
-    {
-        enemiesInRange.Remove(enemy);
     }
 
     void OnTriggerEnter2D(Collider2D other)

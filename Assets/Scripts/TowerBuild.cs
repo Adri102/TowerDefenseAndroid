@@ -28,7 +28,6 @@ public class TowerBuild : MonoBehaviour {
     }
 
 
-    // Esto no funciona
     public void OnTouch()
     {
         GameObject newTower = Instantiate(tower);

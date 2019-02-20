@@ -23,29 +23,17 @@ public class BulletBehaviour : MonoBehaviour {
 
     void Update ()
     {
-        //transform.rotation = Quaternion.Euler(0, 0, 0);
         if(target == null) despawnCounter += Time.deltaTime;
         else
         {
-            // 1 
-            //gameObject.transform.LookAt(target.transform);
+            // Gets the direction the target is facing
             transform.up = target.transform.position - transform.position;
-            //gameObject.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            // Moves to the target
             gameObject.transform.position = Vector2.MoveTowards(transform.position, target.transform.position, Time.deltaTime * speed);
-
-            //transform.rotation = Quaternion.Euler(0, 0, 0);
-            // 2 
-            /*if(gameObject.transform.position == targetPosition)
-            {
-                if(target != null)
-                {
-                    enemy.TakeDamage(damage);
-                }
-                Destroy(gameObject);
-            }*/
         }
 
-        if (despawnCounter > 0.1) Destroy(gameObject);
+        // Missiles explode creating an Aoe damage instead of just despawning
+        if (despawnCounter > 0.1) DestroyBullet();
     }
 
     public void DestroyBullet()
