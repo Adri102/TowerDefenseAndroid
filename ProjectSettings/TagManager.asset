@@ -7,6 +7,10 @@ TagManager:
   - Enemy
   - Bullet
   - Aoe
+  - Laser
+  - BuildMissile
+  - BuildKinetic
+  - BuildLaser
   layers:
   - Default
   - TransparentFX
