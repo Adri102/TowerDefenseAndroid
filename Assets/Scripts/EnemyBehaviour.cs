@@ -93,7 +93,11 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         health -= damage;
         healthBar.fillAmount = health / startHealth;
-        if (health <= 0) Destroy(enemy);
+        if(health <= 0)
+        {
+            player.ChangeMoney(50);
+            Destroy(enemy);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
